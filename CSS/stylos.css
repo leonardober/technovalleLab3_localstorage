@@ -1,22 +1,50 @@
-/*body tipo de letra Herencia*/
-body{
-    font-family:comic sans-serif;
-    font-size: small;
-}
-    .rojo {
-       color: #d00000;
-       font-weight: bold;
+body {
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    color: black;
+    background-color: #f0f0f0;
+    text-align: center;
 }
 
-h1{
-    color: cornflowerblue;
-}
-h2{
-    background-color: aquamarine;
-    color: blueviolet;
-    font-size: 100px;
-}
-
-h6{
+h6 {
     color: red;
+    font-size: 18px;
+}
+
+nav a {
+    text-decoration: none;
+    color: blue;
+    font-weight: bold;
+    margin: 0 10px;
+}
+
+nav button {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: gray;
+}
+
+input, textarea {
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background: white;
+    margin: 5px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+button {
+    margin-left: 10px;
 }

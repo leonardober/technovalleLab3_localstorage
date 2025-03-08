@@ -1,115 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laboratorio_3_Local_Storage</title>
-
-    <link rel="stylesheet" href="css/stylos.css">
-
-    <script>
-      /*comentario  JS*/ 
-        function guardarInfo(){
-            const infoUsr=   document.getElementById("usuario").value;
-            const infoEmail= document.getElementById("email").value;
-            const infoPassw= document.getElementById("passwd").value;
-    
-            localStorage.setItem("usuario",infoUsr);
-            localStorage.setItem("email",infoEmail);
-            localStorage.setItem("passwd",infoPassw);
-            alert("Datos guardados en LocalStorage");
-          
-            }
-           
-            function guardarInfos() {
-                const infoUsr = document.getElementById("usuario").value;
-                const infoEmail = document.getElementById("email").value;
-                const infoPassw = document.getElementById("passwd").value;
-    
-                sessionStorage.setItem("usuario", infoUsr);
-                sessionStorage.setItem("email", infoEmail);
-                sessionStorage.setItem("passwd", infoPassw);
-                alert("Datos guardados en SessionStorage");
-            }
-    
-           
-     </script>
-     
-    
+    <title>Formulario y Gestión de Tareas</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <hr>
+
+    <header>
+        <h1>Formulario y Gestión de Tareas</h1>
+        <nav>
+            <a href="#formulario">Formulario</a> |
+            <a href="#tareas">Gestión de Tareas</a> |
+            <button onclick="irInicio()">Ir al Inicio</button>
+        </nav>
+    </header>
+
     <section id="formulario">
+        <h6>FORMULARIO</h6>
+        <hr>
 
-      <h2>Etiquetas lista Desordenadas indice Hipervinculos # relacionadas con id section</h2>
-      <ul>
-      <li><a href="#formulario" style="text-decoration: none;">Etiquetas Hipervinculos FORMULARIO <Div></Div></a></li>
-      </ul>
+        <form onsubmit="guardarInfo(); return false;">
+            <label for="usuario">USUARIO</label>
+            <input type="text" id="usuario" name="usuario"><br><br>
 
-      
-     <h1>FORMULARIO</h1>
-     <h1 align ="center">FORMULARIO</h1>
-     <hr>
-     <!--https://coolors.co/palettes/trending-->
+            <label for="email">CORREO ELECTRONICO</label>
+            <input type="email" id="email" name="email"><br><br>
 
-     <!--llamado al local storage del Script del head guardar info-->
-      <!--for y id deben ser iguales-->
-        <!--Almacena en localstorage-->
-        <form onsubmit="guardarInfo(); guardarInfos(); return false;">
+            <label for="passwd">CONTRASEÑA</label>
+            <input type="password" id="passwd" name="passwd"><br><br>
 
-        <label for="usuario">USUARIO</label>
-        <input type="text" id="usuario" name="usuario"><br><br>
-
-        <label for="email">CORREO ELECTRONICO</label>
-        <input type="email" id="email" name="email"><br><br>
-
-        <label for="passwd">CONTRASEÑA</label>
-        <input type="password" id="passwd" name="passwd"><br><br>
-
-        <label for="msg">MENSAJE</label><br>
-        <textarea id="msg" name="msg" rows="4" cols="50"></textarea><br><br>
-
-        <label for="nombre">Nombre Tarea</label><br>
-        <textarea id="nombre" name="nombre" rows="4" cols="50"></textarea><br><br>
-
-        <label for="fecha">Fecha Tarea</label><br>
-        <textarea id="fecha" name="fecha" rows="4" cols="50"></textarea><br><br>
-
-        <label for="hora">Hora Tarea</label><br>
-        <textarea id="hora" name="hora" rows="4" cols="50"></textarea><br><br>
-
-        <label for="descripcion">Descripcion</label><br>
-        <textarea id="descripcion" name="descripcion" rows="4" cols="50"></textarea><br><br>
-
-        <label for="genero">GENERO</label><br>
-        <input type="radio"  name="genero" value="M">Masculino<br><br>
-        <input type="radio"  name="genero" value="F">femenino<br><br>
-        
-        <label for="pasatiempos">PASATIEMPOS</label><br>
-        <input type="checkbox"  name="pasatiempos" value="T">Trotar<br><br>
-        <input type="checkbox"  name="pasatiempos" value="L">Leer<br><br>
-        <!--Boton tipo submit llama la funcion onsubmit-->
-         <!--Boton tipo onclick para llamar la funcion leerInfo-->
-        <br>
-        <!--Almacena en localstorage-->
-        <input type="submit" value="Guardar en LocalStorage y SessionStorage"><br><br>
-
-       
-      </form>
-        <!--Un solo formulario que guarda en localStorage y sessionStorage al enviar.
-✅ Botones corregidos (onclick="leerInfo()" en lugar de onclick="leerInfo").
-✅ Mensajes de alerta para confirmar que los datos se guardaron, cargaron o eliminaron.
-✅ Prevención de valores null al leer datos (|| "" para evitar errores).
-✅ Restablecer campos al borrar datos.
-
-Ahora este código maneja correctamente el CRUD en localStorage y sessionStorage-->   
-
+            <input type="submit" value="Guardar en LocalStorage"><br><br>
+            <input type="button" onclick="leerInfo()" value="Leer LocalStorage">
+            <input type="button" onclick="borrarInfo()" value="Borrar LocalStorage"><br><br>
+        </form>
     </section>
 
-    <a href="#">ir al inicio</a>
+    <section id="tareas">
+        <h6>GESTIÓN DE TAREAS</h6>
 
-    <hr>  <!--Linea divisoria-->
+        <label for="tarea">Nueva Tarea:</label>
+        <input type="text" id="tarea" name="tarea">
+        <button onclick="agregarTarea()">Agregar Tarea</button>
 
-    
+        <h6>Lista de Tareas</h6>
+        <ul id="listaTareas"></ul>
+    </section>
+
+    <!-- Enlaces a archivos JavaScript -->
+    <script src="js/script.js"></script>
+    <script src="js/tareas.js"></script>
+
 </body>
 </html>
