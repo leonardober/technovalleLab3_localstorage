@@ -1,62 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laboratorio_3_Local_Storage</title>
-
-    <link rel="stylesheet" href="css/stylos.css">
-
-    <script>
-      /*comentario  JS*/ 
-        function guardarInfo(){
-            const infoUsr=   document.getElementById("usuario").value;
-            const infoEmail= document.getElementById("email").value;
-            const infoPassw= document.getElementById("passwd").value;
-    
-            localStorage.setItem("usuario",infoUsr);
-            localStorage.setItem("email",infoEmail);
-            localStorage.setItem("passwd",infoPassw);
-            alert("Datos guardados en LocalStorage");
-          
-            }
-           
-            function guardarInfos() {
-                const infoUsr = document.getElementById("usuario").value;
-                const infoEmail = document.getElementById("email").value;
-                const infoPassw = document.getElementById("passwd").value;
-    
-                sessionStorage.setItem("usuario", infoUsr);
-                sessionStorage.setItem("email", infoEmail);
-                sessionStorage.setItem("passwd", infoPassw);
-                alert("Datos guardados en SessionStorage");
-            }
-    
-           
-     </script>
-     
-    
+    <title>Formulario y Gestión de Tareas</title>
 </head>
 <body>
+
+    <h1 align="center">FORMULARIO</h1>
     <hr>
-    <section id="formulario">
 
-      <h2>Etiquetas lista Desordenadas indice Hipervinculos # relacionadas con id section</h2>
-      <ul>
-      <li><a href="#formulario" style="text-decoration: none;">Etiquetas Hipervinculos FORMULARIO <Div></Div></a></li>
-      </ul>
-
-      
-     <h1>FORMULARIO</h1>
-     <h1 align ="center">FORMULARIO</h1>
-     <hr>
-     <!--https://coolors.co/palettes/trending-->
-
-     <!--llamado al local storage del Script del head guardar info-->
-      <!--for y id deben ser iguales-->
-        <!--Almacena en localstorage-->
-        <form onsubmit="guardarInfo(); guardarInfos(); return false;">
-
+    <form onsubmit="guardarInfo(); guardarInfos(); return false;">
         <label for="usuario">USUARIO</label>
         <input type="text" id="usuario" name="usuario"><br><br>
 
@@ -69,47 +23,143 @@
         <label for="msg">MENSAJE</label><br>
         <textarea id="msg" name="msg" rows="4" cols="50"></textarea><br><br>
 
-        <label for="nombre">Nombre Tarea</label><br>
-        <textarea id="nombre" name="nombre" rows="4" cols="50"></textarea><br><br>
-
-        <label for="fecha">Fecha Tarea</label><br>
-        <textarea id="fecha" name="fecha" rows="4" cols="50"></textarea><br><br>
-
-        <label for="hora">Hora Tarea</label><br>
-        <textarea id="hora" name="hora" rows="4" cols="50"></textarea><br><br>
-
-        <label for="descripcion">Descripcion</label><br>
-        <textarea id="descripcion" name="descripcion" rows="4" cols="50"></textarea><br><br>
-
-        <label for="genero">GENERO</label><br>
-        <input type="radio"  name="genero" value="M">Masculino<br><br>
-        <input type="radio"  name="genero" value="F">femenino<br><br>
-        
-        <label for="pasatiempos">PASATIEMPOS</label><br>
-        <input type="checkbox"  name="pasatiempos" value="T">Trotar<br><br>
-        <input type="checkbox"  name="pasatiempos" value="L">Leer<br><br>
-        <!--Boton tipo submit llama la funcion onsubmit-->
-         <!--Boton tipo onclick para llamar la funcion leerInfo-->
-        <br>
-        <!--Almacena en localstorage-->
         <input type="submit" value="Guardar en LocalStorage y SessionStorage"><br><br>
 
-       
-      </form>
-        <!--Un solo formulario que guarda en localStorage y sessionStorage al enviar.
-✅ Botones corregidos (onclick="leerInfo()" en lugar de onclick="leerInfo").
-✅ Mensajes de alerta para confirmar que los datos se guardaron, cargaron o eliminaron.
-✅ Prevención de valores null al leer datos (|| "" para evitar errores).
-✅ Restablecer campos al borrar datos.
+        <input type="button" onclick="leerInfo()" value="Leer LocalStorage">
+        <input type="button" onclick="borrarInfo()" value="Borrar LocalStorage"><br><br>
 
-Ahora este código maneja correctamente el CRUD en localStorage y sessionStorage-->   
+        <input type="button" onclick="leerInfos()" value="Leer SessionStorage">
+        <input type="button" onclick="borrarInfos()" value="Borrar SessionStorage">
+    </form>
 
-    </section>
+    <h2>Gestión de Tareas</h2>
 
-    <a href="#">ir al inicio</a>
+    <label for="tarea">Nueva Tarea:</label>
+    <input type="text" id="tarea" name="tarea">
+    <button onclick="agregarTarea()">Agregar Tarea</button>
 
-    <hr>  <!--Linea divisoria-->
+    <h3>Lista de Tareas</h3>
+    <ul id="listaTareas"></ul>
 
-    
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            leerInfo();
+            mostrarTareas();
+        });
+
+        function guardarInfo() {
+            const infoUsr = document.getElementById("usuario").value;
+            const infoEmail = document.getElementById("email").value;
+            const infoPassw = document.getElementById("passwd").value;
+
+            localStorage.setItem("usuario", infoUsr);
+            localStorage.setItem("email", infoEmail);
+            localStorage.setItem("passwd", infoPassw);
+            alert("Datos guardados en LocalStorage");
+        }
+
+        function leerInfo() {
+            document.getElementById("usuario").value = localStorage.getItem("usuario") || "";
+            document.getElementById("email").value = localStorage.getItem("email") || "";
+            document.getElementById("passwd").value = localStorage.getItem("passwd") || "";
+        }
+
+        function borrarInfo() {
+            localStorage.removeItem("usuario");
+            localStorage.removeItem("email");
+            localStorage.removeItem("passwd");
+            document.getElementById("usuario").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("passwd").value = "";
+            alert("Datos eliminados de LocalStorage");
+        }
+
+        function guardarInfos() {
+            sessionStorage.setItem("usuario", document.getElementById("usuario").value);
+            sessionStorage.setItem("email", document.getElementById("email").value);
+            sessionStorage.setItem("passwd", document.getElementById("passwd").value);
+            alert("Datos guardados en SessionStorage");
+        }
+
+        function leerInfos() {
+            document.getElementById("usuario").value = sessionStorage.getItem("usuario") || "";
+            document.getElementById("email").value = sessionStorage.getItem("email") || "";
+            document.getElementById("passwd").value = sessionStorage.getItem("passwd") || "";
+        }
+
+        function borrarInfos() {
+            sessionStorage.clear();
+            document.getElementById("usuario").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("passwd").value = "";
+            alert("Datos eliminados de SessionStorage");
+        }
+
+        function obtenerTareas() {
+            return JSON.parse(localStorage.getItem("tareas")) || [];
+        }
+
+        function guardarTareas(tareas) {
+            localStorage.setItem("tareas", JSON.stringify(tareas));
+        }
+
+        function agregarTarea() {
+            const nuevaTareaTexto = document.getElementById("tarea").value.trim();
+            if (nuevaTareaTexto === "") {
+                alert("Por favor, ingresa una tarea.");
+                return;
+            }
+
+            let tareas = obtenerTareas();
+            const nuevaTarea = { id: Date.now(), texto: nuevaTareaTexto };
+            tareas.push(nuevaTarea);
+
+            guardarTareas(tareas);
+            document.getElementById("tarea").value = "";
+            mostrarTareas();
+        }
+
+        function actualizarTarea(id) {
+            let tareas = obtenerTareas();
+            const tareaIndex = tareas.findIndex(tarea => tarea.id === id);
+
+            if (tareaIndex === -1) {
+                alert("No se encontró la tarea.");
+                return;
+            }
+
+            const nuevoTexto = prompt("Modifica tu tarea:", tareas[tareaIndex].texto);
+
+            if (nuevoTexto !== null && nuevoTexto.trim() !== "") {
+                tareas[tareaIndex].texto = nuevoTexto.trim();
+                guardarTareas(tareas);
+                mostrarTareas();
+            }
+        }
+
+        function eliminarTarea(id) {
+            let tareas = obtenerTareas();
+            tareas = tareas.filter(tarea => tarea.id !== id);
+
+            guardarTareas(tareas);
+            mostrarTareas();
+        }
+
+        function mostrarTareas() {
+            const lista = document.getElementById("listaTareas");
+            lista.innerHTML = "";
+
+            let tareas = obtenerTareas();
+
+            tareas.forEach(tarea => {
+                const li = document.createElement("li");
+                li.innerHTML = `${tarea.texto} 
+                    <button onclick="actualizarTarea(${tarea.id})">✏️</button>
+                    <button onclick="eliminarTarea(${tarea.id})">🗑️</button>`;
+                lista.appendChild(li);
+            });
+        }
+    </script>
+
 </body>
 </html>
