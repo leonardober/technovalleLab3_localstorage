@@ -20,6 +20,17 @@
             alert("Datos guardados en LocalStorage");
           
             }
+
+            function leerInfo(){
+                const infoUsr = localStorage.getItem("usuario") ||"";
+                const infoEmail = localStorage.getItem("email") ||"";
+                const infoPasswd = localStorage.getItem("passwd") ||"";
+    
+                document.getElementById("usuario").value = infoUsr;
+                document.getElementById("email").value = infoEmail;
+                document.getElementById("passwd").value = infoPasswd;
+                alert("Datos guardados en LocalStorage");
+            }
            
             function guardarInfos() {
                 const infoUsr = document.getElementById("usuario").value;
@@ -31,6 +42,18 @@
                 sessionStorage.setItem("passwd", infoPassw);
                 alert("Datos guardados en SessionStorage");
             }
+
+            function leerInfos() {
+                const infoUsr = sessionStorage.getItem("usuario") || "";
+                const infoEmail = sessionStorage.getItem("email") || "";
+                const infoPasswd = sessionStorage.getItem("passwd") || "";
+    
+                document.getElementById("usuario").value = infoUsr;
+                document.getElementById("email").value = infoEmail;
+                document.getElementById("passwd").value = infoPasswd;
+                alert("Datos cargados desde SessionStorage");
+            }
+    
     
            
      </script>
@@ -93,8 +116,8 @@
         <br>
         <!--Almacena en localstorage-->
         <input type="submit" value="Guardar en LocalStorage y SessionStorage"><br><br>
-
-       
+        <input type="button" onclick="leerInfo()" value="Leer LocalStorage">
+        <input type="button" onclick="leerInfos()" value="Leer SessionStorage">
       </form>
         <!--Un solo formulario que guarda en localStorage y sessionStorage al enviar.
 ✅ Botones corregidos (onclick="leerInfo()" en lugar de onclick="leerInfo").
