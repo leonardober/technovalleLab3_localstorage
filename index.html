@@ -1,115 +1,91 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laboratorio_3_Local_Storage</title>
-
-    <link rel="stylesheet" href="css/stylos.css">
-
-    <script>
-      /*comentario  JS*/ 
-        function guardarInfo(){
-            const infoUsr=   document.getElementById("usuario").value;
-            const infoEmail= document.getElementById("email").value;
-            const infoPassw= document.getElementById("passwd").value;
-    
-            localStorage.setItem("usuario",infoUsr);
-            localStorage.setItem("email",infoEmail);
-            localStorage.setItem("passwd",infoPassw);
-            alert("Datos guardados en LocalStorage");
-          
-            }
-           
-            function guardarInfos() {
-                const infoUsr = document.getElementById("usuario").value;
-                const infoEmail = document.getElementById("email").value;
-                const infoPassw = document.getElementById("passwd").value;
-    
-                sessionStorage.setItem("usuario", infoUsr);
-                sessionStorage.setItem("email", infoEmail);
-                sessionStorage.setItem("passwd", infoPassw);
-                alert("Datos guardados en SessionStorage");
-            }
-    
-           
-     </script>
-     
-    
+    <title>Gestión de Tareas</title>
 </head>
 <body>
-    <hr>
-    <section id="formulario">
 
-      <h2>Etiquetas lista Desordenadas indice Hipervinculos # relacionadas con id section</h2>
-      <ul>
-      <li><a href="#formulario" style="text-decoration: none;">Etiquetas Hipervinculos FORMULARIO <Div></Div></a></li>
-      </ul>
+    <h1>Gestión de Tareas</h1>
 
-      
-     <h1>FORMULARIO</h1>
-     <h1 align ="center">FORMULARIO</h1>
-     <hr>
-     <!--https://coolors.co/palettes/trending-->
+    <label for="msg">Nueva Tarea:</label>
+    <input type="text" id="msg" name="msg">
+    <button onclick="agregarTarea()">Agregar Tarea</button>
 
-     <!--llamado al local storage del Script del head guardar info-->
-      <!--for y id deben ser iguales-->
-        <!--Almacena en localstorage-->
-        <form onsubmit="guardarInfo(); guardarInfos(); return false;">
+    <h2>Lista de Tareas</h2>
+    <ul id="listaTareas"></ul>
 
-        <label for="usuario">USUARIO</label>
-        <input type="text" id="usuario" name="usuario"><br><br>
+    <script>
+        document.addEventListener("DOMContentLoaded", mostrarTareas);
 
-        <label for="email">CORREO ELECTRONICO</label>
-        <input type="email" id="email" name="email"><br><br>
+        function obtenerTareas() {
+            return JSON.parse(localStorage.getItem("tareas")) || [];
+        }
 
-        <label for="passwd">CONTRASEÑA</label>
-        <input type="password" id="passwd" name="passwd"><br><br>
+        function guardarTareas(tareas) {
+            localStorage.setItem("tareas", JSON.stringify(tareas));
+        }
 
-        <label for="msg">MENSAJE</label><br>
-        <textarea id="msg" name="msg" rows="4" cols="50"></textarea><br><br>
+        function agregarTarea() {
+            const nuevaTareaTexto = document.getElementById("msg").value.trim();
 
-        <label for="nombre">Nombre Tarea</label><br>
-        <textarea id="nombre" name="nombre" rows="4" cols="50"></textarea><br><br>
+            if (nuevaTareaTexto === "") {
+                alert("Por favor, ingresa una tarea.");
+                return;
+            }
 
-        <label for="fecha">Fecha Tarea</label><br>
-        <textarea id="fecha" name="fecha" rows="4" cols="50"></textarea><br><br>
+            let tareas = obtenerTareas();
+            const nuevaTarea = { id: Date.now(), texto: nuevaTareaTexto };
 
-        <label for="hora">Hora Tarea</label><br>
-        <textarea id="hora" name="hora" rows="4" cols="50"></textarea><br><br>
+            tareas.push(nuevaTarea);
+            guardarTareas(tareas);
 
-        <label for="descripcion">Descripcion</label><br>
-        <textarea id="descripcion" name="descripcion" rows="4" cols="50"></textarea><br><br>
+            document.getElementById("msg").value = "";
+            mostrarTareas();
+        }
 
-        <label for="genero">GENERO</label><br>
-        <input type="radio"  name="genero" value="M">Masculino<br><br>
-        <input type="radio"  name="genero" value="F">femenino<br><br>
-        
-        <label for="pasatiempos">PASATIEMPOS</label><br>
-        <input type="checkbox"  name="pasatiempos" value="T">Trotar<br><br>
-        <input type="checkbox"  name="pasatiempos" value="L">Leer<br><br>
-        <!--Boton tipo submit llama la funcion onsubmit-->
-         <!--Boton tipo onclick para llamar la funcion leerInfo-->
-        <br>
-        <!--Almacena en localstorage-->
-        <input type="submit" value="Guardar en LocalStorage y SessionStorage"><br><br>
+        function actualizarTarea(id) {
+            let tareas = obtenerTareas();
+            const tareaIndex = tareas.findIndex(tarea => tarea.id === id);
 
-       
-      </form>
-        <!--Un solo formulario que guarda en localStorage y sessionStorage al enviar.
-✅ Botones corregidos (onclick="leerInfo()" en lugar de onclick="leerInfo").
-✅ Mensajes de alerta para confirmar que los datos se guardaron, cargaron o eliminaron.
-✅ Prevención de valores null al leer datos (|| "" para evitar errores).
-✅ Restablecer campos al borrar datos.
+            if (tareaIndex === -1) {
+                alert("No se encontró la tarea.");
+                return;
+            }
 
-Ahora este código maneja correctamente el CRUD en localStorage y sessionStorage-->   
+            const nuevoTexto = prompt("Modifica tu tarea:", tareas[tareaIndex].texto);
 
-    </section>
+            if (nuevoTexto !== null && nuevoTexto.trim() !== "") {
+                tareas[tareaIndex].texto = nuevoTexto.trim();
+                guardarTareas(tareas);
+                mostrarTareas();
+            }
+        }
 
-    <a href="#">ir al inicio</a>
+        function eliminarTarea(id) {
+            let tareas = obtenerTareas();
+            tareas = tareas.filter(tarea => tarea.id !== id);
 
-    <hr>  <!--Linea divisoria-->
+            guardarTareas(tareas);
+            mostrarTareas();
+        }
 
-    
+        function mostrarTareas() {
+            const lista = document.getElementById("listaTareas");
+            lista.innerHTML = "";
+
+            let tareas = obtenerTareas();
+
+            tareas.forEach(tarea => {
+                const li = document.createElement("li");
+                li.innerHTML = `${tarea.texto} 
+                    <button onclick="actualizarTarea(${tarea.id})">✏️</button>
+                    <button onclick="eliminarTarea(${tarea.id})">🗑️</button>`;
+                lista.appendChild(li);
+            });
+        }
+    </script>
+
 </body>
 </html>
