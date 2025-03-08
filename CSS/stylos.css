@@ -1,0 +1,22 @@
+/*body tipo de letra Herencia*/
+body{
+    font-family:comic sans-serif;
+    font-size: small;
+}
+    .rojo {
+       color: #d00000;
+       font-weight: bold;
+}
+
+h1{
+    color: cornflowerblue;
+}
+h2{
+    background-color: aquamarine;
+    color: blueviolet;
+    font-size: 100px;
+}
+
+h6{
+    color: red;
+}
